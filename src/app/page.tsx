@@ -1,4 +1,5 @@
 import DayCounter from "@/components/DayCounter";
+import SignupForm from "@/components/SignupForm";
 import Link from "next/link";
 
 export default function Home() {
@@ -24,15 +25,12 @@ export default function Home() {
         <div className="mt-8">
           <DayCounter />
         </div>
-        <p
-          className="text-sm mt-6"
-          style={{ color: "var(--color-soft-gray)" }}
-        >
-          raised slowly · grown publicly
-        </p>
+        <div className="mt-10">
+          <SignupForm />
+        </div>
         <Link
           href="/manifesto"
-          className="inline-block text-sm mt-3 hover:text-[var(--color-deep-plum)]! hover:decoration-[var(--color-plum)]!"
+          className="inline-block text-sm mt-6 hover:text-[var(--color-deep-plum)]! hover:decoration-[var(--color-plum)]!"
           style={{
             color: "var(--color-plum)",
             textDecoration: "underline",
@@ -42,6 +40,12 @@ export default function Home() {
         >
           read the manifesto →
         </Link>
+        <p
+          className="text-sm mt-6"
+          style={{ color: "var(--color-soft-gray)" }}
+        >
+          raised slowly · grown publicly
+        </p>
       </div>
     </main>
   );
