@@ -1,4 +1,5 @@
 import DayCounter from "@/components/DayCounter";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -29,6 +30,18 @@ export default function Home() {
         >
           raised slowly · grown publicly
         </p>
+        <Link
+          href="/manifesto"
+          className="inline-block text-sm mt-3 hover:text-[var(--color-deep-plum)]! hover:decoration-[var(--color-plum)]!"
+          style={{
+            color: "var(--color-plum)",
+            textDecoration: "underline",
+            textUnderlineOffset: "4px",
+            textDecorationColor: "var(--color-rose)",
+          }}
+        >
+          read the manifesto →
+        </Link>
       </div>
     </main>
   );
