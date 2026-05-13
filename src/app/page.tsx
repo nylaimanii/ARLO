@@ -5,7 +5,7 @@ export default function Home() {
     <main className="min-h-screen flex items-center justify-center">
       <div className="text-center">
         <h1
-          className="font-display text-8xl font-bold lowercase"
+          className="font-display text-7xl md:text-8xl font-bold lowercase"
           style={{ color: "var(--color-deep-plum)" }}
         >
           arlo
@@ -16,7 +16,11 @@ export default function Home() {
         >
           a welfare-first developmental ai companion
         </p>
-        <div className="mt-12">
+        <div
+          className="mt-8 mx-auto h-px w-10"
+          style={{ backgroundColor: "var(--color-rose)" }}
+        />
+        <div className="mt-8">
           <DayCounter />
         </div>
         <p
