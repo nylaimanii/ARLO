@@ -1,3 +1,5 @@
+import DayCounter from "@/components/DayCounter";
+
 export default function Home() {
   return (
     <main className="min-h-screen flex items-center justify-center">
@@ -14,6 +16,9 @@ export default function Home() {
         >
           a welfare-first developmental ai companion
         </p>
+        <div className="mt-12">
+          <DayCounter />
+        </div>
         <p
           className="text-sm mt-6"
           style={{ color: "var(--color-soft-gray)" }}
