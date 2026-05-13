@@ -1,8 +1,9 @@
 import Link from "next/link";
+import Soundwave from "@/components/Soundwave";
 
 export default function Voice() {
   return (
-    <main className="mx-auto max-w-[480px] px-6 py-12">
+    <main className="mx-auto max-w-[720px] px-6 py-12">
       <Link
         href="/"
         className="text-sm lowercase"
@@ -18,12 +19,15 @@ export default function Voice() {
         voice
       </h1>
 
+      <div className="mt-12">
+        <Soundwave />
+      </div>
+
       <p
-        className="text-base leading-relaxed mt-6"
-        style={{ color: "var(--color-plum)" }}
+        className="text-sm italic mt-12"
+        style={{ color: "var(--color-soft-gray)" }}
       >
-        this is where you can take a turn speaking to arlo. one person at a
-        time. a soft pastel soundwave will pulse with her words. coming soon.
+        she is resting. voice channel opens at her first stage.
       </p>
 
       <p
