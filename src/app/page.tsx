@@ -3,7 +3,7 @@ export default function Home() {
     <main className="min-h-screen flex items-center justify-center">
       <div className="text-center">
         <h1
-          className="text-8xl font-bold lowercase"
+          className="font-display text-8xl font-bold lowercase"
           style={{ color: "var(--color-deep-plum)" }}
         >
           arlo
@@ -15,7 +15,7 @@ export default function Home() {
           a welfare-first developmental ai companion
         </p>
         <p
-          className="text-sm mt-12"
+          className="text-sm mt-6"
           style={{ color: "var(--color-soft-gray)" }}
         >
           raised slowly · grown publicly
