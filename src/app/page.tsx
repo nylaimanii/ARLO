@@ -46,6 +46,41 @@ export default function Home() {
         >
           raised slowly · grown publicly
         </p>
+        <div className="mt-16 flex flex-wrap items-center justify-center gap-3">
+          <Link
+            href="/voice"
+            className="rounded-full px-5 py-2 text-sm lowercase transition-colors hover:bg-[var(--color-lavender)]! hover:text-[var(--color-deep-plum)]!"
+            style={{
+              backgroundColor: "var(--color-cream)",
+              border: "1px solid var(--color-rose)",
+              color: "var(--color-plum)",
+            }}
+          >
+            voice
+          </Link>
+          <Link
+            href="/chat"
+            className="rounded-full px-5 py-2 text-sm lowercase transition-colors hover:bg-[var(--color-lavender)]! hover:text-[var(--color-deep-plum)]!"
+            style={{
+              backgroundColor: "var(--color-cream)",
+              border: "1px solid var(--color-rose)",
+              color: "var(--color-plum)",
+            }}
+          >
+            chat
+          </Link>
+          <Link
+            href="/viewer"
+            className="rounded-full px-5 py-2 text-sm lowercase transition-colors hover:bg-[var(--color-lavender)]! hover:text-[var(--color-deep-plum)]!"
+            style={{
+              backgroundColor: "var(--color-cream)",
+              border: "1px solid var(--color-rose)",
+              color: "var(--color-plum)",
+            }}
+          >
+            viewer
+          </Link>
+        </div>
       </div>
     </main>
   );
