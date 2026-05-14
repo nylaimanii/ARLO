@@ -9,6 +9,7 @@ type Message = {
   content: string;
   id: string;
   filtered?: boolean;
+  simulated?: boolean;
 };
 
 function Bar({
@@ -102,6 +103,7 @@ export default function ChatBox() {
           content: data.response,
           id: crypto.randomUUID(),
           filtered: data.filtered === true,
+          simulated: data.simulated === true,
         },
       ]);
 
@@ -193,6 +195,14 @@ export default function ChatBox() {
                 style={{ color: "var(--color-soft-gray)" }}
               >
                 she is protected from messages like that
+              </p>
+            )}
+            {m.simulated && (
+              <p
+                className="text-xs italic mt-1"
+                style={{ color: "var(--color-soft-gray)" }}
+              >
+                she paused to think
               </p>
             )}
           </div>
