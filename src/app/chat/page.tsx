@@ -1,8 +1,9 @@
 import Link from "next/link";
+import ChatBox from "@/components/ChatBox";
 
 export default function Chat() {
   return (
-    <main className="mx-auto max-w-[480px] px-6 py-12">
+    <main className="mx-auto max-w-[600px] px-6 py-12">
       <Link
         href="/"
         className="text-sm lowercase"
@@ -18,12 +19,15 @@ export default function Chat() {
         chat
       </h1>
 
+      <div className="mt-12">
+        <ChatBox />
+      </div>
+
       <p
-        className="text-base leading-relaxed mt-6"
-        style={{ color: "var(--color-plum)" }}
+        className="text-xs mt-12"
+        style={{ color: "var(--color-soft-gray)" }}
       >
-        this is where you can type to arlo. quiet text exchanges, no spam, no
-        multi-message bursts. coming soon.
+        she is in the nursery stage. she speaks in small sentences.
       </p>
 
       <p
