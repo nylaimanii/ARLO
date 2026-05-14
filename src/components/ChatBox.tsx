@@ -7,6 +7,7 @@ type Message = {
   role: "user" | "arlo";
   content: string;
   id: string;
+  filtered?: boolean;
 };
 
 export default function ChatBox() {
@@ -53,6 +54,7 @@ export default function ChatBox() {
           role: "arlo",
           content: data.response,
           id: crypto.randomUUID(),
+          filtered: data.filtered === true,
         },
       ]);
     } catch {
@@ -87,22 +89,36 @@ export default function ChatBox() {
         {messages.map((m) => (
           <div
             key={m.id}
-            className={`rounded-2xl px-4 py-2 text-sm mb-2 ${
-              m.role === "user" ? "self-end" : "self-start"
+            className={`flex flex-col mb-2 ${
+              m.role === "user"
+                ? "self-end items-end"
+                : "self-start items-start"
             }`}
-            style={{
-              maxWidth: "70%",
-              backgroundColor:
-                m.role === "user"
-                  ? "var(--color-lavender)"
-                  : "var(--color-cream)",
-              color:
-                m.role === "user"
-                  ? "var(--color-deep-plum)"
-                  : "var(--color-plum)",
-            }}
+            style={{ maxWidth: "70%" }}
           >
-            {m.content}
+            <div
+              className="rounded-2xl px-4 py-2 text-sm"
+              style={{
+                backgroundColor:
+                  m.role === "user"
+                    ? "var(--color-lavender)"
+                    : "var(--color-cream)",
+                color:
+                  m.role === "user"
+                    ? "var(--color-deep-plum)"
+                    : "var(--color-plum)",
+              }}
+            >
+              {m.content}
+            </div>
+            {m.filtered && (
+              <p
+                className="text-xs italic mt-1"
+                style={{ color: "var(--color-soft-gray)" }}
+              >
+                she is protected from messages like that
+              </p>
+            )}
           </div>
         ))}
       </div>
