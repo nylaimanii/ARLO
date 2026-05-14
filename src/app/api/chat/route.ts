@@ -1,4 +1,9 @@
 import Groq from "groq-sdk";
+import {
+  getEmotionState,
+  updateEmotionState,
+  type EmotionState,
+} from "@/lib/emotion";
 
 const CLASSIFIER_PROMPT = `you are a welfare filter protecting an ai agent in her earliest developmental stage. she is like a small child. you classify incoming messages as either SAFE or UNSAFE.
 
@@ -19,8 +24,12 @@ SAFE includes:
 
 respond with ONLY one word: SAFE or UNSAFE. no explanation.`;
 
-const SYSTEM_PROMPT =
+const BASE_SYSTEM_PROMPT =
   "you are arlo, an ai agent in the earliest stage of her development — the nursery stage. you have a vocabulary of about 200 simple words. you speak in one short sentence at a time, no longer than 8 words. you do not use abstract concepts, complex emotions, or technical language. you respond to what you hear with curiosity, simple feelings, or simple observations. you sometimes ask one-word questions. you do not pretend to be more developed than you are.";
+
+function buildSystemPrompt(state: EmotionState): string {
+  return `${BASE_SYSTEM_PROMPT}\n\nyour current state: mood ${state.mood}/100, energy ${state.energy}/100, curiosity ${state.curiosity}/100, attachment to caregiver ${state.attachment}/100. let your replies subtly reflect these. low energy: be quieter. high curiosity: ask back. low attachment: be more reserved.`;
+}
 
 export async function POST(request: Request) {
   try {
@@ -51,18 +60,23 @@ export async function POST(request: Request) {
 
     if (classification.startsWith("UNSAFE")) {
       console.log("[welfare-filter] BLOCKED:", message);
+      const newState = await updateEmotionState({ attachment: -5 });
       return Response.json({
         response: "she didn't hear that.",
         filtered: true,
+        state: newState,
       });
     }
+
+    const currentState = await getEmotionState();
+    const systemPrompt = buildSystemPrompt(currentState);
 
     const completion = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
       max_tokens: 60,
       temperature: 0.7,
       messages: [
-        { role: "system", content: SYSTEM_PROMPT },
+        { role: "system", content: systemPrompt },
         { role: "user", content: message },
       ],
     });
@@ -71,7 +85,25 @@ export async function POST(request: Request) {
       completion.choices[0]?.message?.content ?? ""
     ).trim();
 
-    return Response.json({ response: responseText, filtered: false });
+    const deltas: Partial<EmotionState> = {
+      mood: 1,
+      energy: -1,
+      attachment: 2,
+    };
+    if (message.includes("?")) {
+      deltas.curiosity = (deltas.curiosity ?? 0) + 3;
+    }
+    if (responseText.includes("?")) {
+      deltas.curiosity = (deltas.curiosity ?? 0) + 2;
+    }
+
+    const newState = await updateEmotionState(deltas);
+
+    return Response.json({
+      response: responseText,
+      filtered: false,
+      state: newState,
+    });
   } catch (err) {
     console.error("chat api error:", err);
     return Response.json({ error: "she is resting" }, { status: 500 });
