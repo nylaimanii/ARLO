@@ -1,6 +1,5 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { getEmbedding } from "@/lib/embeddings";
-import type { Stage } from "@/lib/stage";
 
 const AGENT_ID = "arlo-1";
 
@@ -17,7 +16,7 @@ export type Memory = {
   role: MemoryRole;
   attachment_context?: AttachmentContext | null;
   importance?: number;
-  stage_at_time: Stage;
+  stage_at_time: string;
 };
 
 export type RecalledMemory = {

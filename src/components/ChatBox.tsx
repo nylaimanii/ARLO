@@ -2,67 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
-import type { EmotionState } from "@/lib/emotion";
 
 type Message = {
   role: "user" | "arlo";
   content: string;
   id: string;
-  filtered?: boolean;
-  simulated?: boolean;
 };
-
-function Bar({
-  label,
-  value,
-  color,
-}: {
-  label: string;
-  value: number;
-  color: string;
-}) {
-  return (
-    <div className="mb-2">
-      <p
-        className="text-xs lowercase mb-1"
-        style={{ color: "var(--color-soft-gray)" }}
-      >
-        {label} {value}/100
-      </p>
-      <div
-        className="rounded-full overflow-hidden"
-        style={{
-          height: "6px",
-          backgroundColor: "var(--color-cream)",
-        }}
-      >
-        <div
-          className="h-full rounded-full transition-[width] duration-500"
-          style={{
-            width: `${value}%`,
-            backgroundColor: color,
-          }}
-        />
-      </div>
-    </div>
-  );
-}
 
 export default function ChatBox() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [emotion, setEmotion] = useState<EmotionState | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    fetch("/api/emotion")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.state) setEmotion(data.state);
-      })
-      .catch(() => {});
-  }, []);
 
   useEffect(() => {
     if (listRef.current) {
@@ -102,14 +53,8 @@ export default function ChatBox() {
           role: "arlo",
           content: data.response,
           id: crypto.randomUUID(),
-          filtered: data.filtered === true,
-          simulated: data.simulated === true,
         },
       ]);
-
-      if (data.state) {
-        setEmotion(data.state);
-      }
     } catch {
       setMessages((prev) => [
         ...prev,
@@ -126,31 +71,6 @@ export default function ChatBox() {
 
   return (
     <div className="flex flex-col">
-      {emotion && (
-        <div className="mb-4">
-          <Bar
-            label="mood"
-            value={emotion.mood}
-            color="var(--color-rose)"
-          />
-          <Bar
-            label="energy"
-            value={emotion.energy}
-            color="var(--color-lilac)"
-          />
-          <Bar
-            label="curiosity"
-            value={emotion.curiosity}
-            color="var(--color-lavender)"
-          />
-          <Bar
-            label="attachment"
-            value={emotion.attachment}
-            color="rgba(75, 21, 40, 0.7)"
-          />
-        </div>
-      )}
-
       <div
         ref={listRef}
         className="flex flex-col overflow-y-auto rounded-2xl px-4 py-4"
@@ -189,22 +109,6 @@ export default function ChatBox() {
             >
               {m.content}
             </div>
-            {m.filtered && (
-              <p
-                className="text-xs italic mt-1"
-                style={{ color: "var(--color-soft-gray)" }}
-              >
-                she is protected from messages like that
-              </p>
-            )}
-            {m.simulated && (
-              <p
-                className="text-xs italic mt-1"
-                style={{ color: "var(--color-soft-gray)" }}
-              >
-                she paused to think
-              </p>
-            )}
           </div>
         ))}
       </div>
